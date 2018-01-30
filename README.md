@@ -63,5 +63,12 @@
     一元运算符 +num
     二元运算符 a + b
     三元运算符 c ? a : b
+    赋值  x += 1
+    比较  a == b
+    算术  a - b
+    位   a | b
+    逻辑  exp1 && exp2
+    字符串 "a" + "b"
+    特殊  delete obj.x
 
         
