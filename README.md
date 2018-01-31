@@ -30,12 +30,12 @@
 
 ### 包装对象
     隐藏机制
-    ```javascript
+```javascript
         var a = "string";
         alert(str.length); //6
         a.t = 3;
         alert(a.t); //undefined
-    ```
+```
     'str'   ---> String Object
     123     ---> Number Object
     true    ---> Boolean Object
