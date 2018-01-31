@@ -105,3 +105,51 @@
 
     console.log(someResult);    //true
 ```
+    filter()函数。利用指定的函数确定是否在返回的数组中包含某一项。
+```javascript
+    var numbers = [1, 2, 3, 4, 5, 4, 3, 2, 1];
+    var filterResult = numbers.filter(function(item, index, array) {
+        return (item > 2);
+    });
+
+    console.log(filterResult);  //[3, 4, 5, 4, 3]
+```
+    map()也是返回一个数组，而这个数组的每一项都是在原始数组中的对应上运行传入函数的结果。例如：可以给数组中的每一项乘以2，  
+    然后返回这些乘积组成的数组。
+```javascript
+    var numbers = [1, 2, 3, 4, 5, 4, 3, 2, 1];  
+
+    var mapResult = numbers.map(function() {
+        return item * 2;
+    });
+
+    console.log(mapResult);     //[2, 4, 6, 8, 10, 8, 6, 4, 2]
+```
+
+### 归并方法
+    ECMAScript5还新增了两个归并数组的方法：reduce()和reduceRight()。这两个方法都会迭代数组的所有项，然后构建一个最终返回的值。其中，reduce()方法从数组的第一项开始，逐个遍历到最后。而reduceRight()则从数组的最后一项开始，向前遍历到第一项。  
+    这两个方法都接受两个参数：一个在每一项上调用的函数和(可选的)作为归并基础的初始值。传给reduce()和reduceRight()的函数接受4个参数“前一个值、当前值、项的索引和数组对象。这个函数返回的任何值都会作为第一个参数自动传给下一项。第一项迭代发生在数组的第二项上，因此第一个参数是数组的第一项，第二个参数就是数组的第二项。  
+
+    使用reduce()方法可以执行求数组中的所有值之和的操作。
+```javascript
+    var values = [1, 2, 3, 4, 5];
+    var sum = values.reduce(function(prev, cur, index, array) {
+        return prev + cur;
+    })
+
+    console.log(sum);   //15
+```
+
+    第一次执行回调函数，prev是1，cur是2.第二次，prev是3(1加2的结果)，cur是3(数组的第三项)。这个过程会持续到把数组中的每一项都访问一遍，最后返回结果。
+
+    reduceRight()的作用类似，只不过方向相反而已。
+```javascript
+    var values = [1, 2, 3, 4, 5];
+    var sum = values.reduceRight(function(prev, cur, index, array) {
+        return prev + cur;
+    });
+
+    console.log(sum);   //15
+```
+
+    第一次执行回调函数，prev是5，cur是4，当然，最终结果相同，因为执行的都是简单的相加操作。
