@@ -40,5 +40,68 @@
     2.插入：可以向指定位置插入任意数量的项，只需提供3个参数，起始位置、0(要删除的项数)和要插入的项。如果要插入多个项，可以在传入第四、第五，  
     以至任意多个项。例如：splice(2, 0, 'red', 'green')会从当前数组的位置2开始插入字符串'red'和'green'.
     3.替换：可以向指定位置插入任意数量的项，且同时删除任意数量的项，只需指定3个参数：起始位置、要删除的项数和要插入的任意数量的项。  
-    插入的项数不必与删除的项数相等。例如：splice(2, 1, 'red', 'green')会删除=当前数组为止2的项，然后再从位置2开始插入字符串'red'和'green'.
+    插入的项数不必与删除的项数相等。例如：splice(2, 1, 'red', 'green')会删除=当前数组为止2的项，然后再从位置2开始插入字符串'red'和'green'。  
+    splice()方法始终都会返回一个数组，该数组中包含从原始数组中删除的项(如果没有删除任何项，则返回一个空数组)。
+```javascript
+    var colors = ['red', 'green', 'blue'];
+    var removed = colors.splice(0, 1);  //删除第一项
+    console.log(colors);    //green, blue
+    console.log(removed);   //red,返回的数组中只包含一项
 
+
+    removed = colors.splice(1, 0, 'yellow', 'orange');  //从位置1开始插入两项
+    console.log(colors);    //green, yellow, orange, blue
+    console.log(removed);   //返回的是一个空数组
+
+
+    removed = colors.splice(1, 1, 'red', 'purple');     //插入两项，删除一项
+    console.log(colors);    //green, red, purple, orange, blue
+    console.log(removed);   //yellow,返回的数组中只包含一项
+```
+
+### 位置方法
+    ECMAScript5为数组实例添加了两个位置方法：indexOf()和lastIndexOf().这两个方法都接受两个参数：要查找的项和(可选的)表示查找起点位置的索引。  
+    其中，indexOf()方法从数组的开头(位置是0)开始向后查找，lastIndexOf()方法则从数组末尾开始向前查找。  
+    这两个方法都返回查找的项在数组中的位置，或者在没有找到的情况下返回-1。在比较第一个参数与数组中的每一项时，会使用全等操作符，也就是说，要求查找的项必须严格相等。(就像使用===一样)。
+```javascript
+    var numbers = [1, 2, 3, 4, 5, 4, 3, 2, 1];
+    console.log(numbers.indexOf(4));     //3
+    console.log(numbers.lastIndexOf(4));    //5
+
+
+    console.log(numbers.indexOf(4, 4)); //5
+    console.log(numbers.lastIndexOf(4, 4)); //3
+
+    var person = [ {name: 'Nicholas' } ];
+    var people = [{name: 'Nicholas'}];
+    var morePeople = [person];
+
+    console.log(people.indexOf(person));    //-1
+    console.log(morePeople.indexOf(person));    //0
+```
+
+#### 迭代方法
+    ECMAScript5为数组定义了5个迭代方法。每个方法都接受两个参数：要在每一项上运行的函数和(可选的)运行函数的作用域对象——影响this的值。传入这些方法  
+    中的函数会接受三个参数：数组项的值、该项在数组中的位置和数组对象本身。根据使用的方法不同，这个函数执行后的返回值可能会也可能不会影响方法返回值。
+    1.every(): 对数组中的每一项给定函数，如果该函数对的每一项都返回true，则返回true。
+    2.filter(): 对数组中的每一项给定函数，返回该函数会返回true的项组成的数组。
+    3.forEach(): 对数组中的每一项运行给定函数，这个方法没有返回值。
+    4.map(): 对数组的每一项运行给定函数，返回每次函数调用的结果组成的数组。
+    5.some(): 对数组中的每一项运行给定函数，如果该函数对任一项返回true，则返回true。
+
+    对于every()和some(),它们都用于查询数组中的项是否满足某个条件。对every()来说，传入的函数必须对每一项都返回true，这个方法才返回true；否则，它就返回false。而some()方法则是是要传入的函数对数组中的某一项返回true，就会返回true。
+```javascript
+    var numbers = [1, 2, 3, 4, 5, 4, 3, 2, 1];
+    var everyResult = numbers.every(function(item, index, array) {
+        return (item > 2);
+    });
+
+    console.log(everyResult);   //false
+
+
+    var someResult = numbers.some(function(item, index, array) {
+        return (item > 2);
+    });
+
+    console.log(someResult);    //true
+```
